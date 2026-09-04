@@ -1,0 +1,64 @@
+# ================================================================
+# CONFIGURACIÓN BÁSICA DE INICIALIZACIÓN DE SERVIDOR (Linux/Ubuntu)
+# Archivo: server_init.txt
+# ================================================================
+
+1. ACTUALIZACIÓN DEL SISTEMA
+------------------------------------------------------------------
+sudo apt update && sudo apt upgrade -y
+
+
+2. CREACIÓN DE USUARIO ADMINISTRADOR (No usar root directamente)
+------------------------------------------------------------------
+# Crear usuario
+sudo adduser adminuser
+
+# Asignar permisos de superusuario (sudo)
+sudo usermod -aG sudo adminuser
+
+
+3. CONFIGURACIÓN BÁSICA DE SEGURIDAD SSH
+------------------------------------------------------------------
+# Copiar claves SSH al nuevo usuario (desde tu máquina local):
+# ssh-copy-id adminuser@IP_DEL_SERVIDOR
+
+# Editar configuración SSH:
+# sudo nano /etc/ssh/sshd_config
+#
+# Ajustes recomendados:
+#   PermitRootLogin no
+#   PasswordAuthentication no
+#   PubkeyAuthentication yes
+
+# Reiniciar servicio SSH para aplicar cambios:
+sudo systemctl restart ssh
+
+
+4. CONFIGURACIÓN DEL FIREWALL (UFW)
+------------------------------------------------------------------
+# Permitir tráfico SSH antes de activar el firewall
+sudo ufw allow OpenSSH
+
+# (Opcional) Si alojarás web:
+# sudo ufw allow 80/tcp    # HTTP
+# sudo ufw allow 443/tcp   # HTTPS
+
+# Activar firewall
+sudo ufw enable
+
+# Verificar estado
+sudo ufw status
+
+
+5. AJUSTE DE ZONA HORARIA Y NOMBRE DEL EQUIPO (Hostname)
+------------------------------------------------------------------
+# Configurar zona horaria (ejemplo UTC o local)
+sudo timedatectl set-timezone UTC
+
+# Asignar nombre identificador al servidor
+sudo hostnamectl set-hostname mi-servidor-base
+
+
+# ================================================================
+# SERVIDOR LISTO Y BÁSICAMENTE PROTEGIDO
+# ================================================================
