@@ -14,7 +14,7 @@ sudo apt update && sudo apt upgrade -y
 sudo adduser adminuser
 
 # Asignar permisos de superusuario (sudo)
-sudo usermod -aG sudo adminuser
+sudo usermod -aG sudo adminMike
 
 
 3. CONFIGURACIÓN BÁSICA DE SEGURIDAD SSH
